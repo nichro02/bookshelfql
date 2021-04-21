@@ -1,13 +1,13 @@
 const express = require('express')
-
 //set up middleware: https://www.npmjs.com/package/express-graphql
 const { graphqlHTTP } = require('express-graphql')
+const schema = require('./schema/schema')
 
 const app = express()
 
 // bind express with graphql
 app.use('/graphql', graphqlHTTP({
-    //schema:schema,
+    schema: schema,
     //graphiql:true
 }))
 
