@@ -4,6 +4,8 @@
 //3. Define root queries (how a user can jump into graph to grab data)
 
 const graphql = require('graphql')
+//install lodash to help query database
+const _=require('lodash')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql
 
@@ -24,8 +26,8 @@ const RootQuery = new GraphQLObjectType({
             type: BookType,
             args: {id: {type: GraphQLString}},
             resolve(parent, args){
-                
                 //code to get data from database
+                return _.find(books, {id: args.id})
             }
 
         }
