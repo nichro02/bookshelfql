@@ -7,7 +7,7 @@ const graphql = require('graphql')
 //install lodash to help query database
 const _=require('lodash')
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList } = graphql
 
 // dummy book data
 let books = [
@@ -29,6 +29,7 @@ let authors = [
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
+    //fields need to be wrapped in a function so that file runs before function executes, allowing time for AuthorType to be defined
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
@@ -49,7 +50,14 @@ const AuthorType = new GraphQLObjectType({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
         age: {type: GraphQLInt},
-        country: {type: GraphQLString}
+        country: {type: GraphQLString},
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent,args){
+                //search through books array for any book where authorId = author ID being searched on
+                return _.filter(books,{authorId: parent.id})
+            }
+        }
     })
 })
 
