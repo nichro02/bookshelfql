@@ -18,6 +18,7 @@ mongoose.connection.once('open', () => {
 
 // bind express with graphql
 app.use('/graphql', graphqlHTTP({
+    //define graph
     schema: schema,
     graphiql:true
 }))
