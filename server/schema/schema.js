@@ -6,7 +6,7 @@
 const graphql = require('graphql')
 //install lodash to help query database
 const _=require('lodash')
-
+//require mongoose models
 const Book = require('../models/book')
 const Author = require('../models/author')
 
@@ -108,6 +108,30 @@ const RootQuery = new GraphQLObjectType({
     }
 })
 
+//need to explicitly define mutations so that we can add to/change data in database and give app CRUD functionality
+const Mutation = new GraphQLObjectType({
+    name:'Mutation',
+    fields:{
+        addAuthor: {
+            type:AuthorType,
+            args:{
+                name: {type: GraphQLString},
+                born: {type: GraphQLInt},
+                country: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                let author = new Author({
+                    name: args.name,
+                    born: args.born,
+                    country: args.country
+                })
+                return author.save()
+            }
+        }
+    }
+})
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 })
