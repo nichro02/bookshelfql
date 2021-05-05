@@ -92,6 +92,7 @@ const RootQuery = new GraphQLObjectType({
                 //code to get data from database
                 //test return with dummy data
                 //return _.find(authors, {id: args.id})
+                return Author.findById(args.id)
             }
         },
         books: {
