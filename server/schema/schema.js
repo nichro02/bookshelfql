@@ -100,6 +100,7 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 //test return with dummy data
                 //return books
+                return Book.find({})
             } 
         },
         authors: {
@@ -107,6 +108,7 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 //test return with dummy data
                 //return authors
+                return Author.find({})
             }
         }
     }
