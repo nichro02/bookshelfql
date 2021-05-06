@@ -12,25 +12,6 @@ const Author = require('../models/author')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList } = graphql
 
-// dummy book data
-/*
-let books = [
-    { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId:'1' },
-    { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId:'2' },
-    { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId:'3' },
-    { name: 'The Hero of Ages', genre: 'Fantasy', id: '4', authorId: '2' },
-    { name: 'The Colour of Magic', genre: 'Fantasy', id: '5', authorId: '3' },
-    { name: 'The Light Fantastic', genre: 'Fantasy', id: '6', authorId: '3' }
-
-]
-
-//dummy author data
-let authors = [
-        { name: 'Patrick Rothfuss', born: 1982, id: '1', country: 'United States' },
-        { name: 'Brandon Sanderson', born: 1980, id: '2', country: 'United States' },
-        { name: 'Terry Pratchett', born: 1960, id: '3', country: 'England' }
-]
-*/
 const BookType = new GraphQLObjectType({
     name: 'Book',
     //fields need to be wrapped in a function so that file runs before function executes, allowing time for AuthorType to be defined
@@ -43,8 +24,6 @@ const BookType = new GraphQLObjectType({
             type:AuthorType,
             resolve(parent, args){
                 console.log('PARENT',parent)
-                //test return with dummy data
-                //return _.find(authors, {id: parent.authorId})
                 return Author.findById(parent.authorId)
             }
         }
@@ -61,9 +40,6 @@ const AuthorType = new GraphQLObjectType({
         books: {
             type: new GraphQLList(BookType),
             resolve(parent,args){
-                //search through books array for any book where authorId = author ID being searched on
-                //test return with dummy data
-                //return _.filter(books,{authorId: parent.id})
                 return Book.find({authorId: parent.id})
             }
         }
@@ -79,8 +55,6 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args){
                 //code to get data from database
-                //test return with dummy data
-                //return _.find(books, {id: args.id})
                 return Book.findById(args.id)
             }
 
@@ -90,24 +64,20 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args){
                 //code to get data from database
-                //test return with dummy data
-                //return _.find(authors, {id: args.id})
                 return Author.findById(args.id)
             }
         },
         books: {
             type: new GraphQLList(BookType),
             resolve(parent, args){
-                //test return with dummy data
-                //return books
+                //return all books
                 return Book.find({})
             } 
         },
         authors: {
             type: new GraphQLList(AuthorType),
             resolve(parent, args){
-                //test return with dummy data
-                //return authors
+                //return all authors
                 return Author.find({})
             }
         }
