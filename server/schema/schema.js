@@ -99,7 +99,7 @@ const Mutation = new GraphQLObjectType({
         addAuthor: {
             type:AuthorType,
             args:{
-                name: {type: GraphQLString},
+                name: {type: new GraphQLNonNull(GraphQLString)},
                 born: {type: GraphQLInt},
                 country: {type: GraphQLString}
             },
