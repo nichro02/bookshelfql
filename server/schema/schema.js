@@ -145,11 +145,11 @@ const Mutation = new GraphQLObjectType({
                     country: args.country
                 })
                 Author.findByIdAndUpdate(args.authorId, {name: args.name, born: args.born, country: args.country}, (err, res) =>{
-                    console.log(res)
+                    //console.log(res)
                     console.log('SUCCESSFUL UPDATE')
                     
                 })
-                return author.save()
+                return author
             }
         },
         deleteAuthor:{
@@ -160,7 +160,7 @@ const Mutation = new GraphQLObjectType({
             resolve(parent, args){
                 Author.deleteOne({_id: args.authorId},(err, res) => {
                     console.log('SUCCESSFUL DELETION')
-                    console.log(res)
+                    console.log(res.deletedCount)
                 })
             }
         }
