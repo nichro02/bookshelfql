@@ -188,6 +188,19 @@ const Mutation = new GraphQLObjectType({
                 )
                 return book
             }
+        },
+        deleteBook: {
+            type: BookType,
+            args: {
+                bookId: {type: GraphQLNonNull(GraphQLID)} 
+            },
+            resolve(parent, args){
+                let book = Book.deleteOne({_id: args.bookId},(err, res) => {
+                    console.log('SUCCESSFUL DELETION')
+                    console.log(res.deletedCount)
+                })
+                return book
+            }
         }
     }
 })
