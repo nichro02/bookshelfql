@@ -163,6 +163,31 @@ const Mutation = new GraphQLObjectType({
                     console.log(res.deletedCount)
                 })
             }
+        },
+        updateBook: {
+            type: BookType,
+            args: {
+                bookId: {type: GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLNonNull(GraphQLString)},
+                genre: {type: GraphQLString},
+                plot: {type: GraphQLString},
+                authorId: {type: GraphQLNonNull(GraphQLID)}
+            },
+            resolve(parent, args){
+                let book = Book.findByIdAndUpdate(
+                    args.bookId,
+                    {
+                        name: args.name,
+                        genre: args.genre,
+                        plot: args.plot,
+                        authorId: args.authorId
+                    },
+                    (err, res) => {
+                        console.log('SUCCESSFUL BOOK UPDATE')
+                    }
+                )
+                return book
+            }
         }
     }
 })
