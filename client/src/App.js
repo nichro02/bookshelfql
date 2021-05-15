@@ -2,8 +2,7 @@ import './App.css';
 import { 
   ApolloClient,
   ApolloProvider,
-  InMemoryCache,
-  gql
+  InMemoryCache
 } from '@apollo/client'
 
 
