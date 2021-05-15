@@ -20,7 +20,7 @@ function GetBooks(){
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error</p>
-    console.log(data)
+    console.log(data.books)
     return (
         <h1>Books go here</h1>
     )
