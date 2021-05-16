@@ -1,20 +1,7 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
-//construct query
-const getAllBooksQuery = gql`
-    query getAllBooksQuery {
-        books{
-            id
-            name
-            genre
-            plot
-            author {
-                name
-                country
-            }
-        }
-    }
-`
+import {getAllBooksQuery} from '../queries/queries'
+
 function GetBooks(){
     const { loading, error, data } = useQuery(getAllBooksQuery)
 
@@ -22,7 +9,11 @@ function GetBooks(){
     if (error) return <p>Error</p>
     console.log(data.books)
     return (
-        <h1>Books go here</h1>
+        data.books.map(book => {
+            return(
+                <li key={book.id}>{book.name}</li>
+            )
+        })
     )
 }
 
