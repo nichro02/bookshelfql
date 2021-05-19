@@ -52,6 +52,7 @@ function AddBook(){
     
     //send book info to database
     const handleBook = e => {
+        e.preventDefault()
         console.log(data)
     }
     
